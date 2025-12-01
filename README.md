@@ -491,5 +491,4 @@ tractorcare/
 | **Live Demo** | [TractorCare Web Platform](https://tractorcare.onrender.com) | 
 | **Demo Video** | [YouTube Presentation](https://docs.google.com/document/d/1sqsNX0vkDFiRvL41c-jhvdJvWMnFuF2ll9jcyOomYok/edit?usp=sharing) |
 | **API Documentation** | [Swagger UI](https://tractorcare-backend.onrender.com/docs) | 
-| **Design System** | [Figma Design](https://www.figma.com/design/eWGvztGWZVTiAiBUjvSEXn/TractorCare?node-id=0-1&t=bWg7Cqmcuc0fSKuk-1) |
-| **APK LINK** |[APK LINK](https://docs.google.com/document/d/1sqsNX0vkDFiRvL41c-jhvdJvWMnFuF2ll9jcyOomYok/edit?tab=t.0)|
+| **APK LINK** |[APK LINK]([https://docs.google.com/document/d/1sqsNX0vkDFiRvL41c-jhvdJvWMnFuF2ll9jcyOomYok/edit?tab=t.0](https://drive.google.com/file/d/1eNORwMEZkSrm711QPvlq1Q7eSgZNumFX/view?usp=sharing))|
