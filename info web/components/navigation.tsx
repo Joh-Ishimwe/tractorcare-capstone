@@ -6,80 +6,69 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 
+const navLinks = [
+  { href: "#problem", label: "Problem" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#test-model", label: "Live demo" },
+  { href: "#evidence", label: "Evidence" },
+  { href: "#app", label: "App" },
+  { href: "#faq", label: "FAQ" },
+]
+
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setIsScrolled(window.scrollY > 10)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#how-it-works", label: "How It Works" },
-    { href: "#test-model", label: "Test Model" },
-    { href: "#benefits", label: "Benefits" },
-    { href: "#education", label: "Education" },
-    { href: "#faq", label: "FAQ" },
-    { href: "#contact", label: "Contact" },
-  ]
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        isScrolled || open ? "bg-background/90 backdrop-blur-lg border-b border-border" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold">
-            <Image src="/Logo.png" alt="TractorCare logo" width={80} height={80} />
-          </Link>
+      <nav className="container mx-auto px-4 flex items-center justify-between h-16" aria-label="Main">
+        <Link href="/" className="flex items-center gap-2" aria-label="TractorCare home">
+          <Image src="/Logo.png" alt="TractorCare" width={101} height={40} className="h-10 w-auto rounded-lg" priority />
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <div className="hidden md:flex items-center gap-7">
+          {navLinks.map((l) => (
+            <Link key={l.href} href={l.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              {l.label}
+            </Link>
+          ))}
+          <Button asChild size="sm" className="rounded-full px-5">
+            <Link href="#test-model">Try the demo</Link>
           </Button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </Button>
+      </nav>
+
+      {open && (
+        <div className="md:hidden border-t border-border px-4 pb-4">
+          {navLinks.map((l) => (
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-3 text-sm font-medium text-muted-foreground hover:text-foreground">
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </header>
   )
 }
