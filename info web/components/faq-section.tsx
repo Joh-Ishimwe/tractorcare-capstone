@@ -2,52 +2,51 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqs = [
   {
-    question: "How does the AI detect tractor issues?",
+    question: "How does it detect a problem?",
     answer:
-      "Our ResNet-like CNN analyzes audio clips for anomalies, achieving 92.9% accuracy on engine sounds. The model has been trained on thousands of tractor audio samples to identify patterns that indicate potential failures.",
+      "A recording is turned into 40 MFCC features and passed to a classifier that outputs an anomaly probability. The app can also compare the recording with that tractor's own healthy baseline.",
+  },
+  {
+    question: "How accurate is it?",
+    answer:
+      "On our 295-clip tractor dataset, with recordings kept apart between training and test sets, the ResNet-like CNN reached about 94% accuracy and the best classical model about 81%. A baseline SVM missed all six held-out phone recordings, so field performance on new microphones is unproven. Treat results as a prototype signal, not a diagnosis.",
+  },
+  {
+    question: "Does it replace a mechanic?",
+    answer:
+      "No. It is an early-warning aid and a reminder system. \"Abnormal\" means the sound differs from healthy examples, not that a specific part has failed.",
   },
   {
     question: "Does it work offline?",
     answer:
-      "Yes! The mobile app stores data locally and syncs when online, perfect for rural Rwanda. You can record audio and get predictions even without an internet connection.",
+      "The Android app is designed offline-first: you can record and log usage without a connection and sync later. The web demo needs internet because it calls our hosted API.",
   },
   {
-    question: "What tractors are supported?",
+    question: "Which tractors are supported?",
     answer:
-      "Optimized for older models like MF 240/375, with rule-based schedules from manufacturer guidelines. We continue to expand support for additional tractor models based on user feedback.",
+      "Maintenance rules come from the Massey Ferguson MF 240 and MF 375 operator manuals. Sound analysis is not yet validated per model.",
   },
   {
-    question: "Is it free for cooperatives?",
+    question: "What happens to my recordings?",
     answer:
-      "Yes, free for smallholder cooperatives. Premium features for larger fleets include advanced analytics, fleet management dashboards, and priority support.",
+      "The web demo sends the clip to the hosted API to compute a score. This is a university project, so please do not upload anything sensitive.",
   },
 ]
 
 export function FAQSection() {
   return (
-    <section id="faq" className="py-24 px-4">
-      <div className="container mx-auto">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Frequently Asked Questions</h2>
-            <p className="text-xl text-muted-foreground text-pretty">Got questions? We've got answers.</p>
-          </div>
-
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="border border-border rounded-lg px-6 bg-card"
-              >
-                <AccordionTrigger className="text-left hover:no-underline py-5">
-                  <span className="font-semibold">{faq.question}</span>
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">{faq.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+    <section id="faq" className="py-24 px-4 bg-muted/60">
+      <div className="container mx-auto max-w-3xl">
+        <p className="eyebrow mb-4">FAQ</p>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-10">Questions, answered plainly.</h2>
+        <Accordion type="single" collapsible className="space-y-3">
+          {faqs.map((faq, i) => (
+            <AccordionItem key={i} value={`item-${i}`} className="border border-border rounded-xl px-5 bg-card">
+              <AccordionTrigger className="text-left hover:no-underline py-4 font-semibold">{faq.question}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4 leading-relaxed">{faq.answer}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
   )
