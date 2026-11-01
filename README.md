@@ -9,6 +9,7 @@ TractorCare is a hybrid machine learning system designed for the early detection
 ##  Table of Contents
 
 - [ Machine Learning Journey](#-machine-learning-journey)
+- [ Evaluation on Real Tractor Audio](#-evaluation-on-real-tractor-audio)
 - [ Core Achievements](#-core-achievements)
 - [ System Architecture](#️-system-architecture)
 - [ Key Features](#-key-features)
@@ -45,7 +46,7 @@ Pumps and tractor engines share similar mechanical characteristics:
 - **Representation:** Fixed-length 40×100 frames per audio sample
 - **Window Function:** Hamming window with 2048 sample frames, 512 hop length
 
-**Model Architecture Comparison (6 Models Tested):**
+**Model Architecture Comparison (6 Models Tested) — on the MIMII pump data, a random split:**
 
 | Model | Type | Accuracy | Precision | Recall | F1-Score | Key Strengths |
 |-------|------|----------|-----------|--------|----------|---------------|
@@ -64,7 +65,7 @@ Pumps and tractor engines share similar mechanical characteristics:
 1. **Pre-trained Model:** ResNet-like CNN trained on MIMII pump dataset
 2. **Target Dataset:** Real tractor sounds collected from Freesound platform
 3. **Technique:** Early layer freezing with reduced learning rates
-4. **Result:** Significant improvement in real-world tractor anomaly detection
+4. **Result:** see [Evaluation on real tractor audio](#-evaluation-on-real-tractor-audio) below. The pump-trained model's benefit on tractors has not yet been isolated in an ablation
 
 **Why ResNet-like CNN was Selected:**
 -  **Perfect Precision (100.00%):** Critical for cost-effective maintenance scheduling
@@ -80,6 +81,30 @@ Pumps and tractor engines share similar mechanical characteristics:
 - **Inference Service:** FastAPI backend with real-time processing
 - **Audio Processing:** Automatic MFCC extraction and normalization
 - **Response Format:** Anomaly probability scores with confidence intervals
+
+##  Evaluation on Real Tractor Audio
+
+The pump table above is measured on MIMII with a random split. The tractor clips are segments of longer
+recordings, so a random split leaks near-duplicates between train and test. Re-evaluated with
+recording-grouped 5-fold cross-validation ([evaluation/](evaluation/), reproducible with one command):
+
+| Model | Accuracy (random split) | Accuracy (grouped) | F1 (grouped) | ROC-AUC (grouped) |
+|---|---|---|---|---|
+| KNN | 0.909 | 0.680 | 0.683 | 0.763 |
+| SVM | 0.935 | 0.807 | 0.762 | 0.922 |
+| Simple CNN | 0.924 | 0.832 | 0.745 | 0.898 |
+| **ResNet-like CNN (from scratch)** | 0.945 | **0.939** | **0.917** | **0.959** |
+
+- Random splits overstate classical models by 13 to 23 points. The ResNet-like CNN is the only model that
+  holds up, which supports choosing it.
+- **Known limitations:** recording groups are inferred by clustering, not recorded; the data is 295 clips
+  from one engine family; a model trained on the other clips detected **0 of 6** of the author's own phone
+  recordings, so field performance on farmers' phones is unproven; the MIMII transfer-learning benefit is
+  not yet ablated.
+
+Details, caveats and the exact protocol: [evaluation/README.md](evaluation/README.md).
+
+---
 
 ---
 
@@ -205,6 +230,15 @@ Ensure the following are installed on your development system:
 | **Flutter** | 3.0+ | 
 | **Git** | Latest | 
 | **MongoDB** | 5.0+ |
+
+### Quick start with Docker (backend + MongoDB)
+
+```bash
+SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))") docker compose up --build
+# API docs: http://localhost:8000/docs
+```
+
+Tests: `cd tractorcare-backend && pytest` and `cd evaluation && pytest`.
 
 ### Step 1: Clone the Repository
 
