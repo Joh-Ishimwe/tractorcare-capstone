@@ -2,8 +2,7 @@ import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
 import { HowItWorksSection } from "@/components/how-it-works-section"
 import { TestModelSection } from "@/components/test-model-section"
-import { BenefitsSection } from "@/components/benefits-section"
-import { EducationSection } from "@/components/education-section"
+import { EvidenceSection } from "@/components/evidence-section"
 import { AppDownloadSection } from "@/components/app-download-section"
 import { FAQSection } from "@/components/faq-section"
 import { ContactSection } from "@/components/contact-section"
@@ -18,8 +17,7 @@ export default function Home() {
       <AboutSection />
       <HowItWorksSection />
       <TestModelSection />
-      <BenefitsSection />
-      <EducationSection />
+      <EvidenceSection />
       <AppDownloadSection />
       <FAQSection />
       <ContactSection />
