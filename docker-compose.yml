@@ -1,0 +1,25 @@
+# One-command local stack:  docker compose up --build
+# API docs: http://localhost:8000/docs
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: ./tractorcare-backend
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      DATABASE_NAME: tractorcare_db
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in your shell or a .env file next to this file}
+      ENVIRONMENT: development
+    depends_on:
+      - mongo
+    volumes:
+      - model_cache:/app/temp_models
+
+volumes:
+  mongo_data:
+  model_cache:
