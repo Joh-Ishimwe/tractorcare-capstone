@@ -198,23 +198,25 @@ export function TestModelSection() {
   }
 
   return (
-    <section id="test-model" className="py-24 px-4 bg-[#1a4d3a]">
+    <section id="test-model" className="py-24 px-4 bg-[#14392b] text-white">
       <div className="container mx-auto">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Test Our <span className="text-primary">AI Model</span>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-4">Live demo</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5 text-balance">
+              Score a tractor engine recording
             </h2>
-            <p className="text-xl text-gray-300 text-pretty max-w-3xl mx-auto">
-              Ready for TractorCare to keep your tractor running? Upload an audio recording of your tractor engine and
-              get instant AI-powered analysis powered by our transfer learning model trained on real tractor sounds.
+            <p className="text-lg text-gray-300 text-pretty max-w-2xl mx-auto">
+              Record or upload a short clip and the hosted model returns an anomaly score. This is a research
+              prototype; results are an early signal, not a diagnosis. The first request may take a moment while the
+              server wakes up.
             </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <Card className="border-primary/20 bg-[#0f3829] shadow-xl">
+            <Card className="border-white/10 bg-[#0d2d21] shadow-xl">
               <CardContent className="pt-8 pb-8">
-                <h3 className="text-lg font-bold mb-6 text-white">Upload a tractor audio clip to get an instant health prediction. No account needed—try it now!</h3>
+                <h3 className="text-lg font-bold mb-6 text-white">Try it without an account.</h3>
 
                 <form onSubmit={handleSubmitAudio} className="space-y-6">
                   <div
@@ -237,12 +239,12 @@ export function TestModelSection() {
                       id="audio-upload"
                     />
                     <div className="flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                        <Upload className="h-8 w-8 text-primary" />
+                      <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center">
+                        <Upload className="h-8 w-8 text-accent" />
                       </div>
                       <div>
                         <p className="text-lg font-semibold text-white mb-1">{file ? file.name : "Select Audio"}</p>
-                        <p className="text-sm text-gray-400">Upload Audio File(WAV, less 30s)</p>
+                        <p className="text-sm text-gray-400">WAV or other audio, up to about 30 seconds</p>
                       </div>
                       <div className="mt-4 flex flex-col items-center gap-2 w-full max-w-xs">
                         {!isRecording ? (
@@ -250,7 +252,7 @@ export function TestModelSection() {
                             <Button 
                               type="button" 
                               variant="outline" 
-                              className="border-primary text-primary w-full" 
+                              className="border-accent text-accent bg-transparent hover:bg-accent/10 hover:text-accent w-full" 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleStartRecording();
@@ -261,7 +263,7 @@ export function TestModelSection() {
                             <Button 
                               type="button" 
                               variant="outline" 
-                              className="border-gray-500 text-gray-300 hover:border-gray-400 hover:text-gray-200 w-full" 
+                              className="border-white/30 bg-transparent text-gray-200 hover:bg-white/10 hover:text-white w-full" 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleUploadClick();
@@ -303,7 +305,7 @@ export function TestModelSection() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full text-base bg-primary hover:bg-primary/90 text-white"
+                    className="w-full text-base bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
                     disabled={(!file && !isRecording) || isProcessing}
                   >
                     {isProcessing ? (
@@ -319,7 +321,7 @@ export function TestModelSection() {
                   </Button>
                   
                   {predictionResult && !predictionResult.error && (
-                    <div className="mt-4 p-4 rounded-lg bg-[#1a4d3a] border border-primary/30">
+                    <div className="mt-4 p-4 rounded-lg bg-[#14392b] border border-accent/30">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <span className={`text-2xl ${
