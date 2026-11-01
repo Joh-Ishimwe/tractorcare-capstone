@@ -4,3 +4,9 @@ _pycache_/
 tractorcarenv/
 TractorCare_Defense_Presentation.md
 Josiane Ishimwe_Research report_turnitin_submission.docx.pdf
+
+# Evaluation artefacts
+evaluation/cache/
+evaluation/*.log
+evaluation/__pycache__/
+.pytest_cache/
