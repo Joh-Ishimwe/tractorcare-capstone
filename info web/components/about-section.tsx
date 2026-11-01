@@ -1,48 +1,56 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Shield, Mic, Smartphone } from "lucide-react"
+import { CalendarClock, AudioWaveform, WifiOff } from "lucide-react"
 
 const features = [
   {
-    icon: Shield,
-    title: "Rule-Based Scheduling",
+    icon: CalendarClock,
+    title: "Rule-based servicing",
     description:
-      "Follows factory guidelines for routine tasks like oil changes and filter checks, adjusted for Rwanda's terrain.",
+      "Oil, filter and belt intervals taken from the Massey Ferguson MF 240 and MF 375 operator manuals, triggered by engine hours or calendar time, whichever comes first.",
   },
   {
-    icon: Mic,
-    title: "AI Audio Detection",
-    description: "Uses model to detect anomalies in engine sounds, preventing breakdowns.",
+    icon: AudioWaveform,
+    title: "Sound-based anomaly detection",
+    description:
+      "A short engine recording is converted to MFCC features and scored by a classifier, then compared with that tractor's own healthy baseline.",
   },
   {
-    icon: Smartphone,
-    title: "Offline-First App",
-    description: "App for low-connectivity areas—record audio, get alerts, and sync when online.",
+    icon: WifiOff,
+    title: "Built for weak connectivity",
+    description:
+      "The Flutter app is designed offline-first: record and log usage in the field, sync when a connection is available.",
   },
 ]
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 px-4">
-      <div className="container mx-auto">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">About TractorCare</h2>
-          <p className="text-xl text-muted-foreground text-pretty">
-            Empowering Rwandan farmers with AI-driven tractor maintenance to build a sustainable agricultural future.
-          </p>
-        </div>
+    <section id="problem" className="py-24 px-4">
+      <div className="container mx-auto max-w-6xl">
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12">
+          <div>
+            <p className="eyebrow mb-4">The problem</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-balance">
+              Tractors fail in the field, far from a workshop.
+            </h2>
+            <p className="mt-5 text-muted-foreground leading-relaxed">
+              Many smallholder farmers in Rwanda rely on older, shared tractors. Faults are usually noticed only after
+              a breakdown, and a skilled mechanic can be hours away. An engine often sounds different before it fails,
+              which makes sound a cheap early signal.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {features.map((feature, index) => (
-            <Card key={index} className="border-border bg-card hover:bg-accent/5 transition-colors">
-              <CardContent className="pt-8 pb-8 text-center space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
-                  <feature.icon className="w-8 h-8 text-primary" />
+          <ul className="space-y-4">
+            {features.map((f) => (
+              <li key={f.title} className="flex gap-5 rounded-2xl border border-border bg-card p-6">
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                  <f.icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-semibold">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+                <div>
+                  <h3 className="font-semibold text-lg">{f.title}</h3>
+                  <p className="mt-1.5 text-muted-foreground leading-relaxed">{f.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
