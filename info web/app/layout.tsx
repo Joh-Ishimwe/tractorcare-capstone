@@ -7,10 +7,10 @@ import "./globals.css"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-  title: "TractorCare - AI-Powered Predictive Maintenance for Tractors",
+  title: "TractorCare | Listen to your tractor before it breaks down",
   description:
-    "Boost reliability and reduce downtime with predictive maintenance. Get instant diagnostics for your Massey Ferguson tractors using AI-powered audio analysis—designed for Rwanda's smallholder farmers.",
-  generator: "v0.app",
+    "A research prototype for acoustic engine-fault detection and manual-based maintenance scheduling on Massey Ferguson tractors, designed for smallholder farmers in Rwanda.",
+  
 }
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
